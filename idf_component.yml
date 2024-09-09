@@ -1,0 +1,12 @@
+url: https://github.com/78/esp-builtin-led.git
+version: 1.0.0
+dependencies:
+  espressif/led_strip: "^2.4.1"
+  idf: ">=5.3"
+description: ESP32 Builtin RGB LED
+maintainer: Terrence <terrence@tenclass.com>
+files:
+  exclude:
+  - .git
+repository: git://github.com/78/esp-builtin-led.git
+license: "MIT"
