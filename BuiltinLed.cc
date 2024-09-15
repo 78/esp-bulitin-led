@@ -22,6 +22,11 @@ BuiltinLed::~BuiltinLed() {
     vEventGroupDelete(blink_event_group_);
 }
 
+BuiltinLed& BuiltinLed::GetInstance() {
+    static BuiltinLed instance;
+    return instance;
+}
+
 void BuiltinLed::Configure() {
     led_strip_config_t strip_config = {};
     strip_config.strip_gpio_num = CONFIG_BUILTIN_LED_GPIO;

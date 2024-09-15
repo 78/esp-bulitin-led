@@ -5,17 +5,17 @@
 #include "freertos/semphr.h"
 #include "freertos/task.h"
 #include "freertos/event_groups.h"
+#include <atomic>
 
 #define BLINK_INFINITE -1
 #define BLINK_TASK_STOPPED_BIT BIT0
 #define BLINK_TASK_RUNNING_BIT BIT1
 
+#define DEFAULT_BRIGHTNESS 32
+
 class BuiltinLed {
 public:
-    static BuiltinLed& GetInstance() {
-        static BuiltinLed instance;
-        return instance;
-    }
+    static BuiltinLed& GetInstance();
 
     void BlinkOnce();
     void Blink(int times, int interval_ms);
@@ -23,11 +23,11 @@ public:
     void TurnOn();
     void TurnOff();
     void SetColor(uint8_t r, uint8_t g, uint8_t b);
-    void SetWhite() { SetColor(128, 128, 128); }
-    void SetGrey() { SetColor(32, 32, 32); }
-    void SetRed() { SetColor(128, 0, 0); }
-    void SetGreen() { SetColor(0, 128, 0); }
-    void SetBlue() { SetColor(0, 0, 128); }
+    void SetWhite(uint8_t brightness = DEFAULT_BRIGHTNESS) { SetColor(brightness, brightness, brightness); }
+    void SetGrey(uint8_t brightness = DEFAULT_BRIGHTNESS) { SetColor(brightness, brightness, brightness); }
+    void SetRed(uint8_t brightness = DEFAULT_BRIGHTNESS) { SetColor(brightness, 0, 0); }
+    void SetGreen(uint8_t brightness = DEFAULT_BRIGHTNESS) { SetColor(0, brightness, 0); }
+    void SetBlue(uint8_t brightness = DEFAULT_BRIGHTNESS) { SetColor(0, 0, brightness); }
 
 private:
     BuiltinLed();
@@ -42,7 +42,7 @@ private:
     uint8_t r_ = 0, g_ = 0, b_ = 0;
     int blink_times_ = 0;
     int blink_interval_ms_ = 0;
-    bool should_blink_ = false;
+    std::atomic<bool> should_blink_{false};
 
     void Configure();
     void StartBlinkTask(int times, int interval_ms);
