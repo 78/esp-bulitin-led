@@ -108,7 +108,7 @@ void BuiltinLed::StartBlinkTask(int times, int interval_ms) {
         xEventGroupClearBits(this_->blink_event_group_, BLINK_TASK_RUNNING_BIT);
         xEventGroupSetBits(this_->blink_event_group_, BLINK_TASK_STOPPED_BIT);
         vTaskDelete(NULL);
-    }, "blink", 4096, this, tskIDLE_PRIORITY, &blink_task_);
+    }, "blink", 2048, this, tskIDLE_PRIORITY, &blink_task_);
 
     xSemaphoreGive(mutex_);
 }

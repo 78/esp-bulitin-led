@@ -11,7 +11,7 @@
 #define BLINK_TASK_STOPPED_BIT BIT0
 #define BLINK_TASK_RUNNING_BIT BIT1
 
-#define DEFAULT_BRIGHTNESS 32
+#define DEFAULT_BRIGHTNESS 16
 
 class BuiltinLed {
 public:
